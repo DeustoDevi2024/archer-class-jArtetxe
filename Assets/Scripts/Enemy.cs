@@ -13,6 +13,8 @@ namespace Archer
         [SerializeField]
         private int hitPoints;
 
+        public Light directionalLight;
+
         private Animator animator;
 
         public event IScoreProvider.ScoreAddedHandler OnScoreAdded;
@@ -22,15 +24,28 @@ namespace Archer
             animator = GetComponent<Animator>();
         }
 
+        private void Update()
+        {
+            if (hitPoints < 0)
+            {
+                StartCoroutine(Die());
+            }
+        }
         // Método que se llamará cuando el enemigo reciba un impacto
         public void Hit()
         {
-         
+            Debug.Log(gameObject.name + hitPoints);
+            animator.SetBool("Hit", true);
+            hitPoints--;
         }
 
-        private void Die()
+        private IEnumerator Die()
         {
-           
+            animator.SetBool("Die", true);
+            directionalLight.GetComponent<Light>().enabled = true;
+            yield return new WaitForSeconds(3f);
+            directionalLight.enabled = false;
+            Destroy(gameObject);
         }
     }
 

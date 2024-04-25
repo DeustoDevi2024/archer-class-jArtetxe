@@ -17,14 +17,6 @@ public class Flashlight : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I)){
-            directionalLight.GetComponent<Light>().enabled = true;
-            gameObject.GetComponent<Light>().enabled = false;
-        }
-        if(Input.GetKeyUp(KeyCode.I))
-        {
-            gameObject.GetComponent<Light>().enabled = true;
-            directionalLight.GetComponent<Light>().enabled = false;
-        }
+       
     }
 }
