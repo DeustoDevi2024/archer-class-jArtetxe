@@ -9,19 +9,21 @@ namespace Archer
     public class Enemy : MonoBehaviour, IScoreProvider
     {
 
-        // Cuántas vidas tiene el enemigo
+        public Light directionalLight;
+
+        // Cuï¿½ntas vidas tiene el enemigo
         [SerializeField]
         private int hitPoints;
 
-        public Light directionalLight;
-
         private Animator animator;
+        private AudioSource audioSource;
 
         public event IScoreProvider.ScoreAddedHandler OnScoreAdded;
 
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         private void Update()
@@ -31,11 +33,12 @@ namespace Archer
                 StartCoroutine(Die());
             }
         }
-        // Método que se llamará cuando el enemigo reciba un impacto
+        // Mï¿½todo que se llamarï¿½ cuando el enemigo reciba un impacto
         public void Hit()
         {
             Debug.Log(gameObject.name + hitPoints);
             animator.SetBool("Hit", true);
+            audioSource.Play();
             hitPoints--;
         }
 
@@ -44,7 +47,7 @@ namespace Archer
             animator.SetBool("Die", true);
             directionalLight.GetComponent<Light>().enabled = true;
             yield return new WaitForSeconds(3f);
-            directionalLight.enabled = false;
+            directionalLight.GetComponent<Light>().enabled = false;
             Destroy(gameObject);
         }
     }

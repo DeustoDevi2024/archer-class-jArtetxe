@@ -10,7 +10,7 @@ namespace Archer
     public class Bow : MonoBehaviour
     {
 
-        // Referencia a la acción de Input para disparar
+        // Referencia a la acciï¿½n de Input para disparar
         [SerializeField]
         private InputActionReference fireInputReference;
 
@@ -22,21 +22,23 @@ namespace Archer
         [SerializeField]
         private float force;
         
-        // Una referencia a un transform que servirá de punto de referencia para disparar la flecha
+        // Una referencia a un transform que servirï¿½ de punto de referencia para disparar la flecha
         [SerializeField]
         private Transform handPosition;
 
       
 
         private Animator animator;
+        private AudioSource audioSource;
 
         private void Awake()
         {
            
-            // Nos subscribimos al evento de input de disparo (el espacio o el botón A).
+            // Nos subscribimos al evento de input de disparo (el espacio o el botï¿½n A).
             fireInputReference.action.performed += Action_performed;
 
             animator = GetComponent<Animator>();
+            audioSource = GetComponent<AudioSource>();
         }
 
         private void Action_performed(InputAction.CallbackContext obj)
@@ -47,7 +49,8 @@ namespace Archer
 
         private IEnumerator Shoot()
         {
-          
+            animator.SetTrigger("Shoot");
+            audioSource.Play();
 
             yield return new WaitForSeconds(0.3f);
 
