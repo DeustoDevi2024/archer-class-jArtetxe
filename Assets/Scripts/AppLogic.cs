@@ -38,6 +38,14 @@ namespace Archer
             gameState = gameStateProvider.Load();
         }
 
+        private void Update()
+        {
+            if(GameObject.FindGameObjectsWithTag("Enemy").Length == 0 || GameObject.FindGameObjectWithTag("Player").transform.position.y < -4)
+            {
+                LoadGame();
+            }
+        }
+
         public GameConfig GetGameConfig()
         {
             return gameConfigProvider.Get();
